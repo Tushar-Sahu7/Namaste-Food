@@ -3,7 +3,7 @@
 A modern **React-based web application** for browsing restaurants, exploring menus, and managing a shopping cart.
 Built as part of the **Namaste React Course** by [Akshay Saini](https://github.com/akshaymarch7).
 
-🔗 **Live Demo**: [https://namaste-food.vercel.app](https://namaste-food.vercel.app)
+🔗 **Live Demo**: [https://namaste-food.vercel.app](https://namaste-food-ashen.vercel.app/)
 💻 **GitHub Repo**: [Namaste-Food](https://github.com/Tushar-Sahu7/Namaste-Food)
 
 ---
