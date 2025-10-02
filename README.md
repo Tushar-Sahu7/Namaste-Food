@@ -84,7 +84,7 @@ Run unit tests with:
 npm test
 ```
 
-Code coverage reports are generated using **Istanbul**.
+Code coverage reports are generated.
 
 ---
 
