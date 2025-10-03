@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import RestaurentCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
-import { Link } from "react-router";
+import { Link, useOutletContext } from "react-router";
 import useOnlineStatus from "../Utils/useOnlineStatus";
 import UserContext from "../Utils/userContext.js";
 
@@ -13,10 +13,13 @@ const Body = () => {
 
   const RestaurantCardPromoted = withPromotedLabel(RestaurentCard);
 
+  const { userLocation } = useOutletContext();
+  const { lat, lng } = userLocation;
+
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/restaurant?lat=26.83730&lng=80.91650`);
+      const response = await fetch(`/api/restaurant?lat=${lat}&lng=${lng}`);
       if (!response.ok) {
         throw new Error("Failed to fetch restaurant data");
       }
@@ -35,7 +38,7 @@ const Body = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [lat, lng]);
 
   const handleFilter = () => {
     const searchWords = searchText.toLowerCase().split(" ").filter(Boolean);

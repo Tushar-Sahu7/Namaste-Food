@@ -21,6 +21,10 @@ const Grocery = lazy(() => import("./Components/Grocery.jsx"));
 
 const App = () => {
   const [userName, setUserName] = useState();
+  const [userLocation, setUserLocation] = useState({
+    lat: "26.83730", // Default values
+    lng: "80.91650", // Default values
+  });
 
   useEffect(() => {
     // Make an API call and send username and password
@@ -34,7 +38,7 @@ const App = () => {
       <UserContext value={{ loggedInUser: userName, setUserName }}>
         
           <Header />
-          <Outlet />
+          <Outlet context={{ userLocation }} />
         
       </UserContext>
     </Provider>

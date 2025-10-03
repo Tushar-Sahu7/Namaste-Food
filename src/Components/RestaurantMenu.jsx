@@ -1,14 +1,16 @@
 import useRestaurantMenu from "../Utils/useRestaurantMenu";
 import MenuShimmer from "./MenuShimmer";
-import { useParams } from "react-router";
+import { useParams, useOutletContext } from "react-router";
 import RestaurantCategory from "./RestaurantCategory";
 import { useState } from "react";
 
 const RestaurantMenu = () => {
   const [showIndex, setShowIndex] = useState(0);
   const { resId } = useParams();
+  const { userLocation } = useOutletContext();
+  const { lat, lng } = userLocation;
 
-  const resInfo = useRestaurantMenu(resId);
+  const resInfo = useRestaurantMenu(resId, lat, lng);
   // console.log(resInfo);
 
   if (resInfo === null) {
