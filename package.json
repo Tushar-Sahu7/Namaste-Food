@@ -28,6 +28,7 @@
     "react-router": "^7.9.2",
     "tailwindcss": "^4.1.13"
   },
+  "type": "module",
   "devDependencies": {
     "@babel/core": "^7.28.3",
     "@babel/preset-env": "^7.28.3",
