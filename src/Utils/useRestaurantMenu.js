@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
-import { MENU_API } from "../Utils/constants";
 
 const useRestaurantMenu = (resId) => {
   const [resInfo, setResInfo] = useState(null);
-  //fetchdata
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch(MENU_API + resId);
-    const json = await data.json();
+    try {
+      // Use the serverless function instead of the direct Swiggy API
+      const response = await fetch(`/api/menu?restaurantId=${resId}`);
+      const json = await response.json();
 
-    setResInfo(json.data);
+      setResInfo(json.data);
+    } catch (error) {
+      console.error("Error fetching menu data:", error);
+    }
   };
 
   return resInfo;

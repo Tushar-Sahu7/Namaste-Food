@@ -12,19 +12,21 @@ const Body = () => {
   const [loading, setLoading] = useState(false);
 
   const RestaurantCardPromoted = withPromotedLabel(RestaurentCard);
+
   const fetchData = async () => {
     setLoading(true);
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.83730&lng=80.91650&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
-    const json = await data.json();
-    // console.log(json);
-    const newRestaurants =
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants;
+    try {
+      const response = await fetch(`/api/restaurant?lat=26.83730&lng=80.91650`);
+      const json = await response.json();
+      const newRestaurants =
+        json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants;
 
-    setListOfRestaurants(newRestaurants);
-    setFilteredRestaurant(newRestaurants);
+      setListOfRestaurants(newRestaurants);
+      setFilteredRestaurant(newRestaurants);
+    } catch (error) {
+      console.error("Error fetching restaurant data:", error);
+    }
     setLoading(false);
   };
 
@@ -33,7 +35,6 @@ const Body = () => {
   }, []);
 
   const handleFilter = () => {
-    // Split search text into words, match any word in name or cuisines
     const searchWords = searchText.toLowerCase().split(" ").filter(Boolean);
     const filtered = listOfRestaurants.filter((res) => {
       const name = res.info.name.toLowerCase();
