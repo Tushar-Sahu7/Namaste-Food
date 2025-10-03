@@ -17,6 +17,9 @@ const Body = () => {
     setLoading(true);
     try {
       const response = await fetch(`/api/restaurant?lat=26.83730&lng=80.91650`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch restaurant data");
+      }
       const json = await response.json();
       const newRestaurants =
         json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
