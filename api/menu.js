@@ -10,12 +10,13 @@ export default async function handler(req, res) {
     const response = await fetch(url, {
       method: "GET",
       headers: {
+        "Content-Type": "application/json",
         "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
         Accept: "*/*",
-        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Encoding": "gzip, deflate, br, zstd",
         "Accept-Language": "en-US,en;q=0.9",
-        Referer: "https://www.swiggy.com/restaurants",
+        Referer: "https://www.swiggy.com/",
         Platform: "dweb",
         DNT: "1",
       },
