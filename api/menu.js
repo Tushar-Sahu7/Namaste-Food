@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   const { resId, lat, lng } = req.query;
 
   const resData = await fetch(`/api/restaurant?lat=${lat}&lng=${lng}`);
-  const json = await response.json();
+  const json = await resData.json();
   const tid = json?.tid;
   const sid = json?.sid;
   const deviceId = json?.deviceId;
