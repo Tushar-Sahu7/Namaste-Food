@@ -3,12 +3,14 @@ import MenuShimmer from "./MenuShimmer";
 import { useParams, useOutletContext } from "react-router";
 import RestaurantCategory from "./RestaurantCategory";
 import { useState } from "react";
+import useGeoLocation from "../Utils/useGeoLocation";
 
 const RestaurantMenu = () => {
   const [showIndex, setShowIndex] = useState(0);
   const { resId } = useParams();
-  const { userLocation } = useOutletContext();
-  const { lat, lng } = userLocation;
+  const { locationInfo, locationError } = useGeoLocation();
+  const lat = locationInfo?.latitude ?? 26.8566528;
+  const lng = locationInfo?.longitude ?? 80.9435136;
 
   const resInfo = useRestaurantMenu(resId, lat, lng);
   // console.log(resInfo);

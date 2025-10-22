@@ -1,9 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import RestaurentCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
-import { Link, useOutletContext } from "react-router";
+import { Link } from "react-router";
 import useOnlineStatus from "../Utils/useOnlineStatus";
 import UserContext from "../Utils/userContext.js";
+import useGeoLocation from "../Utils/useGeoLocation.js";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -13,13 +14,16 @@ const Body = () => {
 
   const RestaurantCardPromoted = withPromotedLabel(RestaurentCard);
 
-  const { userLocation } = useOutletContext();
-  const { lat, lng } = userLocation;
+  const { locationInfo, locationError } = useGeoLocation();
+  const lat = locationInfo?.latitude ?? 26.8566528;
+  const lng = locationInfo?.longitude ?? 80.9435136;
 
   const fetchData = async () => {
     setLoading(true);
     try {
       const response = await fetch(`/api/restaurant?lat=${lat}&lng=${lng}`);
+      
+      // const response = await fetch(`https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`);
       if (!response.ok) {
         throw new Error("Failed to fetch restaurant data");
       }
