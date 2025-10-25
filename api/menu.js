@@ -3,11 +3,7 @@ import fetch from "node-fetch";
 export default async function handler(req, res) {
   const { resId, lat, lng } = req.query;
 
-  const resData = await fetch(`https://namaste-food-ashen.vercel.app/api/restaurant?lat=${lat}&lng=${lng}`);
-  const json = await resData.json();
-  const tid = json?.tid;
-  const sid = json?.sid;
-  const deviceId = json?.deviceId;
+  
 
   const url = `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${resId}&catalog_qa=undefined&submitAction=ENTER`;
 

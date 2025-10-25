@@ -24,13 +24,14 @@ const Body = () => {
       const response = await fetch(`/api/restaurant?lat=${lat}&lng=${lng}`);
       
       // const response = await fetch(`https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`);
+      
       if (!response.ok) {
         throw new Error("Failed to fetch restaurant data");
       }
       const json = await response.json();
       const newRestaurants =
         json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants;
+          ?.restaurants || [];
 
       setListOfRestaurants(newRestaurants);
       setFilteredRestaurant(newRestaurants);
