@@ -10,40 +10,51 @@ const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const RestaurantCardPromoted = withPromotedLabel(RestaurentCard);
 
-  const { locationInfo, locationError } = useGeoLocation();
-  const lat = locationInfo?.latitude ?? 26.8566528;
-  const lng = locationInfo?.longitude ?? 80.9435136;
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(`/api/restaurant?lat=${lat}&lng=${lng}`);
-      
-      // const response = await fetch(`https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`);
-      
-      if (!response.ok) {
-        throw new Error("Failed to fetch restaurant data");
-      }
-      const json = await response.json();
-      const newRestaurants =
-        json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants || [];
-
-      setListOfRestaurants(newRestaurants);
-      setFilteredRestaurant(newRestaurants);
-    } catch (error) {
-      console.error("Error fetching restaurant data:", error);
-    }
-    setLoading(false);
-  };
+  const { locationInfo, status: geoStatus } = useGeoLocation();
+  const [coords, setCoords] = useState(null);
 
   useEffect(() => {
+    if (geoStatus === 'success') {
+      setCoords({ lat: locationInfo.latitude, lng: locationInfo.longitude });
+    } else if (geoStatus === 'error') {
+      setCoords({ lat: 26.8566528, lng: 80.9435136 });
+    }
+  }, [geoStatus, locationInfo]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!coords) return;
+
+      try {
+        const response = await fetch(`/api/restaurant?lat=${coords.lat}&lng=${coords.lng}`);
+        if (!response.ok) throw new Error("Failed to fetch restaurant data");
+
+        const json = await response.json();
+        const locationUnserviceable = json?.data?.cards[0]?.card?.card?.title;
+
+        if (locationUnserviceable === "Location Unserviceable") {
+          if (coords.lat !== 26.8566528 || coords.lng !== 80.9435136) {
+            setCoords({ lat: 26.8566528, lng: 80.9435136 });
+            return; 
+          }
+        }
+
+        const newRestaurants =
+          json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+            ?.restaurants || [];
+
+        setListOfRestaurants(newRestaurants);
+        setFilteredRestaurant(newRestaurants);
+      } catch (error) {
+        console.error("Error fetching restaurant data:", error);
+      }
+    };
+
     fetchData();
-  }, [lat, lng]);
+  }, [coords]);
 
   const handleFilter = () => {
     const searchWords = searchText.toLowerCase().split(" ").filter(Boolean);
