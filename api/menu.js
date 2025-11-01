@@ -6,13 +6,20 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(url);
-    const data = await response.json();
-    res.json(data);
 
     if (!response.ok) {
-      throw new Error(`Swiggy Menu API returned status ${response.status}`);
+      return res.status(response.status).json({
+        error: `Mock Menu API returned status ${response.status}`,
+      });
     }
+
+    const data = await response.json();
+    return res.status(200).json(data);
   } catch (error) {
-    res.json({ error: "Failed to fetch menu data" });
+    if (res.headersSent) {
+      console.error("Response already sent:", error);
+      return;
+    }
+    return res.status(502).json({ error: "Failed to fetch menu data" });
   }
 }
