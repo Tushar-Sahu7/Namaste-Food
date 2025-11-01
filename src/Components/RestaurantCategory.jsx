@@ -2,9 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import ItemList from "./ItemList";
 
-const RestaurantCategory = ({ data, showItems, setShowIndex }) => {
+const RestaurantCategory = ({ data,showItems, setshowItems }) => {
   const handleClick = () => {
-    setShowIndex();
+    setshowItems();
   };
   // console.log(data);
   const { title, itemCards } = data?.card?.card;
