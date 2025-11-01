@@ -2,13 +2,11 @@ import fetch from "node-fetch";
 
 export default async function handler(req, res) {
   const { resId } = req.query;
-  console.log(resId);
   const url = `https://namastedev.com/api/v1/listRestaurantMenu/${resId}`;
 
   console.log(url)
   try {
     const response = await fetch(url);
-    console.log(response)
     if (!response.ok) {
       return res.status(response.status).json({
         error: `Mock Menu API returned status ${response.status}`,

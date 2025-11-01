@@ -9,7 +9,7 @@ const useRestaurantMenu = (resId) => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`/api/menu?restaurantId=${resId}`);
+      const response = await fetch(`/api/menu?resId=${resId}`);
 
       // const url = `https://namastedev.com/api/v1/listRestaurantMenu/${resId}`;
 
