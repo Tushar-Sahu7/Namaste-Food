@@ -48,8 +48,9 @@ const ItemList = ({ items }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-2 md:gap-4">
+    <div className="grid grid-cols-1 gap-2 md:gap-4 w-full">
       {items.map((item, index) => (
+
         <div data-testid="foodItems" key={item.card.info.id} className="w-full">
           <div className="w-full flex flex-row mb-2 py-2 md:py-4 px-2 md:px-4 items-start justify-between hover:shadow-lg rounded-2xl relative">
             <div className="w-3/4 pr-2 md:pr-6">
@@ -58,8 +59,8 @@ const ItemList = ({ items }) => {
               </h3>
               <h4 className="font-body font-semibold text-xs md:text-base">
                 ₹{" "}
-                {item.card.info.price / 100 ||
-                  item.card.info.defaultPrice / 100}
+                {(item.card.info.price / 100).toFixed(2) ||
+                  (item.card.info.defaultPrice / 100).toFixed(2)}
               </h4>
               <div className="relative">
                 <p

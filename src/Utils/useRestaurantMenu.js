@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
 
-const useRestaurantMenu = (resId, lat, lng) => {
+const useRestaurantMenu = (resId) => {
   const [resInfo, setResInfo] = useState(null);
 
   useEffect(() => {
     fetchData();
-  }, [resId, lat, lng]);
+  }, [resId]);
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`/api/menu?restaurantId=${resId}&lat=${lat}&lng=${lng}`);
+      const response = await fetch(`/api/menu?restaurantId=${resId}`);
 
-      // const url = `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${resId}&catalog_qa=undefined&submitAction=ENTER`;
+      // const url = `https://namastedev.com/api/v1/listRestaurantMenu/${resId}`;
 
       // const response = await fetch(url);
 
-      console.log(response);
       if (!response.ok) {
         throw new Error("Failed to fetch menu data");
       }

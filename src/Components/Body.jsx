@@ -4,7 +4,6 @@ import Shimmer from "./Shimmer";
 import { Link } from "react-router";
 import useOnlineStatus from "../Utils/useOnlineStatus";
 import UserContext from "../Utils/userContext.js";
-import { useLocation } from "../Utils/CordinatesContext.js";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -13,35 +12,24 @@ const Body = () => {
 
   const RestaurantCardPromoted = withPromotedLabel(RestaurentCard);
 
-  const { coords, setCoords } = useLocation();
-
   useEffect(() => {
     const fetchData = async () => {
-      if (!coords) return;
 
       try {
-        const response = await fetch(`/api/restaurant?lat=${coords.lat}&lng=${coords.lng}`);
-        // const url = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${coords.lat}&lng=${coords.lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`;
+        const response = await fetch(`/api/restaurant`);
+        // const url = `https://namastedev.com/api/v1/listRestaurants`;
 
         // const response = await fetch(url);
         if (!response.ok) throw new Error("Failed to fetch restaurant data");
 
         const json = await response.json();
-        console.log(json)
-        const locationUnserviceable = json?.data?.cards[0]?.card?.card?.title;
-
-        if (locationUnserviceable === "Location Unserviceable") {
-          if (coords.lat !== 26.8566528 || coords.lng !== 80.9435136) {
-            setCoords({ lat: 26.8566528, lng: 80.9435136 });
-            return; 
-          }
-        }
 
         const newRestaurants =
-          json?.data?.cards.find((item) => item?.card?.card?.id?.includes("restaurant_grid"))?.card?.card?.gridElements?.infoWithStyle
+          json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
             ?.restaurants || [];
-          console.log(newRestaurants)
 
+        newRestaurants[3].info.cloudinaryImageId = "27a03c452c983d1b90f36faa2cbc0b0a"
+          console.log(newRestaurants)
         setListOfRestaurants(newRestaurants);
         setFilteredRestaurant(newRestaurants);
       } catch (error) {
@@ -50,7 +38,7 @@ const Body = () => {
     };
 
     fetchData();
-  }, [coords]);
+  }, []);
 
   const handleFilter = () => {
     const searchWords = searchText.toLowerCase().split(" ").filter(Boolean);
@@ -105,7 +93,7 @@ const Body = () => {
           className="bg-brand-500 text-white font-medium hover:bg-brand-400 m-2 px-3 py-1 text-sm sm:px-4 sm:py-2 sm:text-base rounded-3xl"
           onClick={() => {
             const topRated = listOfRestaurants.filter(
-              (res) => res.info.avgRating >= 4.5
+              (res) => res.info.avgRating >= 4
             );
             setFilteredRestaurant(topRated);
           }}
@@ -126,13 +114,13 @@ const Body = () => {
       </div>
 
       <div className="max-w-full mx-auto p-6 grid gap-12 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-fr">
-        {filteredRestaurant.map((restaurant) => (
+        {filteredRestaurant.map((restaurant, index) => (
           <Link
-            to={"/Restaurant/" + restaurant.info.id}
+            to={"/restaurant/" + restaurant.info.id}
             key={restaurant.info.id}
             className="w-full block"
           >
-            {restaurant.info.availability.opened ? (
+            {true ? (
               <RestaurantCardPromoted resData={restaurant} />
             ) : (
               <RestaurentCard resData={restaurant} />

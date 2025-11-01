@@ -15,8 +15,6 @@ import { Provider } from "react-redux";
 import appStore from "./Utils/appStore.js";
 // import Grocery from "./Components/Grocery";
 
-import { CordinatesProvider } from "./Utils/CordinatesContext.js";
-
 const Grocery = lazy(() => import("./Components/Grocery.jsx"));
 
 //authentication
@@ -35,10 +33,8 @@ const App = () => {
   return (
     <Provider store={appStore}>
       <UserContext value={{ loggedInUser: userName, setUserName }}>
-        <CordinatesProvider>
-          <Header />
-          <Outlet />
-        </CordinatesProvider>
+        <Header />
+        <Outlet />
       </UserContext>
     </Provider>
   );
