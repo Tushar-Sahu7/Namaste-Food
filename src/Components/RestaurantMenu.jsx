@@ -5,7 +5,7 @@ import RestaurantCategory from "./RestaurantCategory";
 import { useState } from "react";
 
 const RestaurantMenu = () => {
-  const [showItems, setshowItems] = useState(true);
+  const [showIndex, setShowIndex] = useState(1);
   const { resId } = useParams();
   const resInfo = useRestaurantMenu(resId);
 
@@ -32,13 +32,13 @@ const RestaurantMenu = () => {
             {cuisines.join(", ")}
           </h3>
         </div>
-        {categories.map((category) => (
+        {categories.map((category, index) => (
           <RestaurantCategory
             key={category?.card?.card?.title}
             data={category}
-            showItems={showItems}
-            setshowItems={() =>
-              setshowItems(!showItems)
+            showItems={index === showIndex ? true : false}
+            setShowIndex={() =>
+              index !== showIndex ? setShowIndex(index) : setShowIndex(null)
             }
           />
         ))}
