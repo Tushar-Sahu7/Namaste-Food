@@ -4,7 +4,7 @@ import Shimmer from "./Shimmer";
 import { Link } from "react-router";
 import useOnlineStatus from "../Utils/useOnlineStatus";
 import UserContext from "../Utils/userContext.js";
-import useGeoLocation from "../Utils/useGeoLocation.js";
+import { useLocation } from "../Utils/CordinatesContext.js";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -13,26 +13,21 @@ const Body = () => {
 
   const RestaurantCardPromoted = withPromotedLabel(RestaurentCard);
 
-  const { locationInfo, status: geoStatus } = useGeoLocation();
-  const [coords, setCoords] = useState(null);
-
-  useEffect(() => {
-    if (geoStatus === 'success') {
-      setCoords({ lat: locationInfo.latitude, lng: locationInfo.longitude });
-    } else if (geoStatus === 'error') {
-      setCoords({ lat: 26.8566528, lng: 80.9435136 });
-    }
-  }, [geoStatus, locationInfo]);
+  const { coords, setCoords } = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
       if (!coords) return;
 
       try {
-        const response = await fetch(`/api/restaurant?lat=${coords.lat}&lng=${coords.lng}`);
+        // const response = await fetch(`/api/restaurant?lat=${coords.lat}&lng=${coords.lng}`);
+        const url = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${coords.lat}&lng=${coords.lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`;
+
+        const response = await fetch(url);
         if (!response.ok) throw new Error("Failed to fetch restaurant data");
 
         const json = await response.json();
+        console.log(json)
         const locationUnserviceable = json?.data?.cards[0]?.card?.card?.title;
 
         if (locationUnserviceable === "Location Unserviceable") {
@@ -43,8 +38,9 @@ const Body = () => {
         }
 
         const newRestaurants =
-          json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+          json?.data?.cards.find((item) => item?.card?.card?.id?.includes("restaurant_grid"))?.card?.card?.gridElements?.infoWithStyle
             ?.restaurants || [];
+          console.log(newRestaurants)
 
         setListOfRestaurants(newRestaurants);
         setFilteredRestaurant(newRestaurants);

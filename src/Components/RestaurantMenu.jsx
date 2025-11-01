@@ -3,26 +3,24 @@ import MenuShimmer from "./MenuShimmer";
 import { useParams, useOutletContext } from "react-router";
 import RestaurantCategory from "./RestaurantCategory";
 import { useState } from "react";
-import useGeoLocation from "../Utils/useGeoLocation";
+import { useLocation } from "../Utils/CordinatesContext";
 
 const RestaurantMenu = () => {
   const [showIndex, setShowIndex] = useState(0);
   const { resId } = useParams();
-  const { locationInfo, locationError } = useGeoLocation();
-  const lat = locationInfo?.latitude ?? 26.8566528;
-  const lng = locationInfo?.longitude ?? 80.9435136;
+  const { coords, setCoords } = useLocation();
 
-  const resInfo = useRestaurantMenu(resId, lat, lng);
-  // console.log(resInfo);
+  const resInfo = useRestaurantMenu(resId, coords.lat, coords.lng);
+  console.log(resInfo);
 
   if (resInfo === null) {
     return <MenuShimmer />;
   }
 
-  const { name, cuisines } = resInfo?.cards[2]?.card?.card?.info;
+  const { name, cuisines } = resInfo?.cards.find((item) => item?.card?.card["@type"]?.includes("food.v2.Restaurant"))?.card?.card?.info;
 
   const categories =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+    resInfo?.cards?.((obj) => obj.groupedCard)?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
       (c) =>
         c.card?.card?.["@type"] ===
         "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"

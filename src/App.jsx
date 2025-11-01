@@ -13,8 +13,9 @@ import Cart from "./Components/Cart";
 import UserContext from "./Utils/userContext.js";
 import { Provider } from "react-redux";
 import appStore from "./Utils/appStore.js";
-import useGeoLocation from "./Utils/useGeoLocation.js";
 // import Grocery from "./Components/Grocery";
+
+import { CordinatesProvider } from "./Utils/CordinatesContext.js";
 
 const Grocery = lazy(() => import("./Components/Grocery.jsx"));
 
@@ -30,13 +31,14 @@ const App = () => {
     };
     setUserName(data.name);
   }, []);
+
   return (
     <Provider store={appStore}>
       <UserContext value={{ loggedInUser: userName, setUserName }}>
-        
+        <CordinatesProvider>
           <Header />
           <Outlet />
-        
+        </CordinatesProvider>
       </UserContext>
     </Provider>
   );
