@@ -16,10 +16,10 @@ const Body = () => {
     const fetchData = async () => {
 
       try {
-        const response = await fetch(`/api/restaurant`);
-        // const url = `https://namastedev.com/api/v1/listRestaurants`;
+        // const response = await fetch(`/api/restaurant`);
+        const url = `https://namastedev.com/api/v1/listRestaurants`;
 
-        // const response = await fetch(url);
+        const response = await fetch(url);
         if (!response.ok) throw new Error("Failed to fetch restaurant data");
 
         const json = await response.json();
