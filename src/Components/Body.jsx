@@ -20,10 +20,10 @@ const Body = () => {
       if (!coords) return;
 
       try {
-        // const response = await fetch(`/api/restaurant?lat=${coords.lat}&lng=${coords.lng}`);
-        const url = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${coords.lat}&lng=${coords.lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`;
+        const response = await fetch(`/api/restaurant?lat=${coords.lat}&lng=${coords.lng}`);
+        // const url = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${coords.lat}&lng=${coords.lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`;
 
-        const response = await fetch(url);
+        // const response = await fetch(url);
         if (!response.ok) throw new Error("Failed to fetch restaurant data");
 
         const json = await response.json();
