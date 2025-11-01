@@ -29,7 +29,6 @@ const Body = () => {
             ?.restaurants || [];
 
         newRestaurants[3].info.cloudinaryImageId = "27a03c452c983d1b90f36faa2cbc0b0a"
-          console.log(newRestaurants)
         setListOfRestaurants(newRestaurants);
         setFilteredRestaurant(newRestaurants);
       } catch (error) {
@@ -114,7 +113,7 @@ const Body = () => {
       </div>
 
       <div className="max-w-full mx-auto p-6 grid gap-12 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-fr">
-        {filteredRestaurant.map((restaurant, index) => (
+        {filteredRestaurant.map((restaurant) => (
           <Link
             to={"/restaurant/" + restaurant.info.id}
             key={restaurant.info.id}

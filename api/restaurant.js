@@ -9,9 +9,9 @@ export default async function handler(req, res) {
       throw new Error(`Swiggy API returned status ${response.status}`);
     }
     const data = await response.json();
-    res.status(200).json(data);
+    res.json(data);
   } catch (error) {
     console.error("Error fetching restaurant data:", error.message);
-    res.status(500).json({ error: "Failed to fetch restaurant data" });
+    res.json({ error: "Failed to fetch restaurant data" });
   }
 }
