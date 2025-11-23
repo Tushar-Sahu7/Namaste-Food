@@ -16,10 +16,10 @@ const Body = () => {
     const fetchData = async () => {
 
       try {
-        const response = await fetch(`/api/restaurant`);
-        // const url = `https://namastedev.com/api/v1/listRestaurants`;
+        // const response = await fetch(`/api/restaurant`);
+        const url = `https://namastedev.com/api/v1/listRestaurants`;
 
-        // const response = await fetch(url);
+        const response = await fetch(url);
         if (!response.ok) throw new Error("Failed to fetch restaurant data");
 
         const json = await response.json();
@@ -28,7 +28,7 @@ const Body = () => {
           json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
             ?.restaurants || [];
 
-        newRestaurants[3].info.cloudinaryImageId = "27a03c452c983d1b90f36faa2cbc0b0a"
+        // newRestaurants[3].info.cloudinaryImageId = "27a03c452c983d1b90f36faa2cbc0b0a"
         setListOfRestaurants(newRestaurants);
         setFilteredRestaurant(newRestaurants);
       } catch (error) {
