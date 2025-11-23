@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { lazy, Suspense, useState, useEffect } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Header from "./Components/Header";
