@@ -4,7 +4,6 @@ import Shimmer from "./Shimmer";
 import { Link } from "react-router";
 import useOnlineStatus from "../Utils/useOnlineStatus";
 import UserContext from "../Utils/userContext.js";
-import { getRestaurants } from "../../api/restaurant.js";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -17,17 +16,16 @@ const Body = () => {
     const fetchData = async () => {
 
       try {
-        const json = await getRestaurants();
+        const response = await fetch(`/api/restaurant`);
+        if (!response.ok) throw new Error("Failed to fetch restaurant data");
+
+        const json = await response.json();
+
         const newRestaurants =
           json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
             ?.restaurants || [];
 
-        if (newRestaurants[3] && newRestaurants[3].info) {
-        newRestaurants[3].info = {
-          ...newRestaurants[3].info,
-          cloudinaryImageId: "27a03c452c983d1b90f36faa2cbc0b0a",
-        };
-      }
+        newRestaurants[3].info.cloudinaryImageId = "27a03c452c983d1b90f36faa2cbc0b0a"
         setListOfRestaurants(newRestaurants);
         setFilteredRestaurant(newRestaurants);
       } catch (error) {
