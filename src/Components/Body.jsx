@@ -19,7 +19,7 @@ const Body = () => {
       try {
         const json = await getRestaurants();
         const newRestaurants =
-          json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+          json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
             ?.restaurants || [];
 
         if (newRestaurants[3] && newRestaurants[3].info) {
