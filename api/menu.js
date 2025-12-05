@@ -1,24 +1,22 @@
+// api/restaurantMenu.js
 import axios from "axios";
+
 export default async function handler(req, res) {
   const { resId } = req.query;
+
+  if (!resId) {
+    return res.status(400).json({ error: "resId query parameter is required" });
+  }
+
   const url = `https://namastedev.com/api/v1/listRestaurantMenu/${resId}`;
+  console.log("Fetching menu:", url);
 
-  console.log(url)
   try {
-    const response = await axios(url);
-    if (!response.ok) {
-      return res.status(response.status).json({
-        error: `Mock Menu API returned status ${response.status}`,
-      });
-    }
-
-    const data = await response.json();
+    const response = await axios.get(url);
+    const data = response.data;
     return res.status(200).json(data);
   } catch (error) {
-    if (res.headersSent) {
-      console.error("Response already sent:", error);
-      return;
-    }
+    console.error("Error fetching menu:", error.message || error);
     return res.status(502).json({ error: "Failed to fetch menu data" });
   }
 }

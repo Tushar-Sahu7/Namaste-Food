@@ -1,16 +1,22 @@
 import axios from "axios";
-export default async function handler(req, res) {  
+
+export default async function handler(req, res) {
   const url = `https://namastedev.com/api/v1/listRestaurants`;
 
   try {
     const response = await axios.get(url);
-    if (!response.ok) {
-      throw new Error(`Swiggy API returned status ${response.status}`);
+
+    // Axios success check
+    if (response.status !== 200) {
+      throw new Error(`API returned status ${response.status}`);
     }
-    const data = await response.json();
-    res.json(data);
+
+    const data = response.data;
+
+    return res.status(200).json(data);
+
   } catch (error) {
     console.error("Error fetching restaurant data:", error.message);
-    res.json({ error: "Failed to fetch restaurant data" });
+    return res.status(500).json({ error: "Failed to fetch restaurant data" });
   }
 }
