@@ -16,14 +16,11 @@ const Body = () => {
     const fetchData = async () => {
 
       try {
-        // const response = await fetch(`/api/restaurant`);
-        const url = `https://namastedev.com/api/v1/listRestaurants`;
-
-        const response = await fetch(url);
+        const response = await fetch(`/api/restaurant`);
         if (!response.ok) throw new Error("Failed to fetch restaurant data");
 
         const json = await response.json();
-
+        console.log(json);
         const newRestaurants =
           json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
             ?.restaurants || [];

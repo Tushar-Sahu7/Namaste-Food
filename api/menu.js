@@ -1,25 +1,14 @@
-import fetch from "node-fetch";
+import axios from "axios";
+const API_BASE_URL = "https://namastedev.com/api/v1";
 
-export default async function handler(req, res) {
-  const { resId } = req.query;
-  const url = `https://namastedev.com/api/v1/listRestaurantMenu/${resId}`;
-
-  console.log(url)
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      return res.status(response.status).json({
-        error: `Mock Menu API returned status ${response.status}`,
-      });
-    }
-
-    const data = await response.json();
-    return res.status(200).json(data);
-  } catch (error) {
-    if (res.headersSent) {
-      console.error("Response already sent:", error);
-      return;
-    }
-    return res.status(502).json({ error: "Failed to fetch menu data" });
-  }
+export const getRestaurantMenu = async (restaurantId) => {
+try {
+const { data } = await axios.get(
+`${API_BASE_URL}/listRestaurantMenu/${restaurantId}`
+);
+console.log(data);
+return data.data;
+} catch (error) {
+throw error;
 }
+};

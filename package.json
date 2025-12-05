@@ -19,6 +19,7 @@
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/postcss": "^4.1.13",
     "@tailwindcss/vite": "^4.1.13",
+    "axios": "^1.13.2",
     "cors": "^2.8.5",
     "cross-fetch": "^4.1.0",
     "express": "^5.1.0",
