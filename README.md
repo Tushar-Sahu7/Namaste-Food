@@ -55,7 +55,7 @@ Built as part of the **Namaste React Course** by [Akshay Saini](https://github.c
 3. **Run development server**
 
    ```bash
-   npm start
+   npm run dev
    ```
 
 4. **Build for production**
