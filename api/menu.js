@@ -1,10 +1,10 @@
 import express from "express";
 import axios from "axios";
 
-const router = express.Router();
+const menuRouter = express.Router();
 const API_BASE = 'https://namastedev.com/api/v1';
 
-router.get('/menu', async (req, res) => {
+menuRouter.get('/menu', async (req, res) => {
   const { resId } = req.query;
 
   if (!resId) {

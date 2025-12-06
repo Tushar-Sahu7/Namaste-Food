@@ -1,10 +1,10 @@
 import express from "express";
 import axios from "axios";
 
-const router = express.Router();
+const restaurantRouter = express.Router();
 const API_BASE = 'https://namastedev.com/api/v1';
 
-router.get("/restaurant", async (req, res) => {
+restaurantRouter.get("/restaurant", async (req, res) => {
   const url = `${API_BASE}/listRestaurants`;
   try {
     const response = await axios.get(url);
@@ -17,4 +17,4 @@ router.get("/restaurant", async (req, res) => {
   }
 });
 
-export default RestaurantRouter;
+export default restaurantRouter;
