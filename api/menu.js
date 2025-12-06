@@ -9,12 +9,11 @@ export default async function handler(req, res) {
   }
 
   const url = `https://namastedev.com/api/v1/listRestaurantMenu/${resId}`;
-  console.log("Fetching menu:", url);
 
   try {
     const response = await axios.get(url);
     const data = response.data;
-    return res.status(200).json(data);
+    return data;
   } catch (error) {
     console.error("Error fetching menu:", error.message || error);
     return res.status(502).json({ error: "Failed to fetch menu data" });

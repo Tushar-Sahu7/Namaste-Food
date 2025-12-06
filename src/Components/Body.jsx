@@ -4,6 +4,7 @@ import Shimmer from "./Shimmer";
 import { Link } from "react-router";
 import useOnlineStatus from "../Utils/useOnlineStatus";
 import UserContext from "../Utils/userContext.js";
+import axios from "axios";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -16,11 +17,7 @@ const Body = () => {
     const fetchData = async () => {
 
       try {
-        const response = await fetch(`/api/restaurant`);
-        if (!response.ok) throw new Error("Failed to fetch restaurant data");
-
-        const json = await response.json();
-
+        const json = await fetch(`/api/restaurant`);
         const newRestaurants =
           json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
             ?.restaurants || [];
