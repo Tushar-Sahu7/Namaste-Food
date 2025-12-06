@@ -1,21 +1,28 @@
-// api/restaurantMenu.js
+import express from "express";
 import axios from "axios";
 
-export default async function handler(req, res) {
+const router = express.Router();
+const API_BASE = 'https://namastedev.com/api/v1';
+
+router.get('/menu', async (req, res) => {
   const { resId } = req.query;
 
   if (!resId) {
-    return res.status(400).json({ error: "resId query parameter is required" });
+    return res.status(400).json({ message: 'Restaurant ID is required' });
   }
-
-  const url = `https://namastedev.com/api/v1/listRestaurantMenu/${resId}`;
 
   try {
+    const url = `${API_BASE}/listRestaurantMenu/${resId}`;
     const response = await axios.get(url);
-    const data = response.data;
-    return res.status(200).json(data);
+    res.json({ data: response.data });
   } catch (error) {
-    console.error("Error fetching menu:", error.message || error);
-    return res.status(502).json({ error: "Failed to fetch menu data" });
+    console.error("Error fetching menu from external API:", error);
+    if (error.response) {
+      res.status(error.response.status).json({ message: error.response.statusText });
+    } else {
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
   }
-}
+});
+
+export default router;

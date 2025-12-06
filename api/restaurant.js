@@ -1,14 +1,20 @@
+import express from "express";
 import axios from "axios";
 
-export default async function handler(req, res) {
-  const url = `https://namastedev.com/api/v1/listRestaurants`;
+const router = express.Router();
+const API_BASE = 'https://namastedev.com/api/v1';
 
+router.get("/restaurant", async (req, res) => {
+  const url = `${API_BASE}/listRestaurants`;
   try {
     const response = await axios.get(url);
-    const data = response.data;
+    const data =  await response.data;
     return res.status(200).json(data);
-  } catch (error) {
-    console.error("Error fetching restaurant data:", error.message);
-    return res.status(500).json({ error: "Failed to fetch restaurant data" });
   }
-}
+  catch (error) {
+    console.error("Error fetching restaurants:", error.message || error);
+    return res.status(502).json({ error: "Failed to fetch restaurant data" });
+  }
+});
+
+export default router;

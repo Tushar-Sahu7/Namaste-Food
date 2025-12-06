@@ -4,7 +4,6 @@ import Shimmer from "./Shimmer";
 import { Link } from "react-router";
 import useOnlineStatus from "../Utils/useOnlineStatus";
 import UserContext from "../Utils/userContext.js";
-import axios from "axios";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
