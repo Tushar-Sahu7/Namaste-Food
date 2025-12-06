@@ -9,7 +9,7 @@ const useRestaurantMenu = (resId) => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/menu?resId=${resId}`);
+      const response = await fetch(`https://namastedev.com/api/v1/listRestaurantMenu/${resId}`);
       if (!response.ok) {
         throw new Error("Failed to fetch menu data");
       }

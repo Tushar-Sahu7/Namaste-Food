@@ -16,7 +16,9 @@ const Body = () => {
     const fetchData = async () => {
 
       try {
-        const json = await fetch(`/api/restaurant`);
+        const response = await fetch(`https://namastedev.com/api/v1/listRestaurants`);
+        const json = await response.json();
+        console.log(json)
         const newRestaurants =
           json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
             ?.restaurants || [];
