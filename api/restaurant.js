@@ -17,4 +17,4 @@ router.get("/restaurant", async (req, res) => {
   }
 });
 
-export default router;
+export default RestaurantRouter;

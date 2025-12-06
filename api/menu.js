@@ -25,4 +25,4 @@ router.get('/menu', async (req, res) => {
   }
 });
 
-export default router;
+export default menuRouter;
