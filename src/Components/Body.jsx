@@ -16,19 +16,19 @@ const Body = () => {
     const fetchData = async () => {
 
       try {
-        const response = await fetch(`https://namastedev.com/api/v1/listRestaurants`);
+        const response = await fetch('https://yumspot-backend.onrender.com/api/restaurants');
         const json = await response.json();
         console.log(json)
         const newRestaurants =
-          json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-            ?.restaurants || [];
+          json?.data[0]?.data?.cards[0]?.card?.card?.gridElements?.infoWithStyle
+            ?.restaurants.filter((restaurant) => !('@type' in restaurant)) || [];
 
-        if (newRestaurants[3] && newRestaurants[3].info) {
-        newRestaurants[3].info = {
-          ...newRestaurants[3].info,
-          cloudinaryImageId: "27a03c452c983d1b90f36faa2cbc0b0a",
-        };
-      }
+      //   if (newRestaurants[3] && newRestaurants[3].info) {
+      //   newRestaurants[3].info = {
+      //     ...newRestaurants[3].info,
+      //     cloudinaryImageId: "27a03c452c983d1b90f36faa2cbc0b0a",
+      //   };
+      // }
         setListOfRestaurants(newRestaurants);
         setFilteredRestaurant(newRestaurants);
       } catch (error) {
