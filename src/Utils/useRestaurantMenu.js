@@ -9,7 +9,7 @@ const useRestaurantMenu = (resId) => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`https://yumspot-backend.onrender.com/api/menu/${resId}`);
+      const response = await fetch(`/api/menu?resId=${resId}`);
       if (!response.ok) {
         throw new Error("Failed to fetch menu data");
       }

@@ -16,7 +16,7 @@ const Body = () => {
     const fetchData = async () => {
 
       try {
-        const response = await fetch('https://yumspot-backend.onrender.com/api/restaurants');
+        const response = await fetch('/api/restaurants');
         const json = await response.json();
         console.log(json)
         const newRestaurants =
