@@ -59,8 +59,7 @@ const ItemList = ({ items }) => {
               </h3>
               <h4 className="font-body font-semibold text-xs md:text-base">
                 ₹{" "}
-                {(item.card.info.price / 100).toFixed(2) ||
-                  (item.card.info.defaultPrice / 100).toFixed(2)}
+                {((item.card.info.price ||  item.card.info.defaultPrice)/ 100).toFixed(2)} 
               </h4>
               <div className="relative">
                 <p
